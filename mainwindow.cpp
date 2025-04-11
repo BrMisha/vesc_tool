@@ -328,8 +328,10 @@ MainWindow::MainWindow(QWidget *parent) :
                     (!(type == 3 || type == 4 || type == 5 || type == 8));
             ui->pageList->item(mPageNameIdList.value("app_vescremote"))->setHidden
                     (!(type == 0 || type == 3 || type == 6 || type == 7 || type == 8));
+            ui->pageList->item(mPageNameIdList.value("app_balance"))->setHidden
+                    (!(type == 8 || type == 9));
             ui->pageList->item(mPageNameIdList.value("app_pas"))->setHidden
-                    (!(type == 9 || type == 10));
+                    (!(type == 10 || type == 11));
         }
     };
 
@@ -361,6 +363,7 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->pageList->item(mPageNameIdList.value("app_uart"))->setHidden(false);
             ui->pageList->item(mPageNameIdList.value("app_vescremote"))->setHidden(false);
             ui->pageList->item(mPageNameIdList.value("app_nrf"))->setHidden(false);
+            ui->pageList->item(mPageNameIdList.value("app_balance"))->setHidden(false);
             ui->pageList->item(mPageNameIdList.value("app_pas"))->setHidden(false);
             ui->pageList->item(mPageNameIdList.value("app_imu"))->setHidden(false);
             ui->pageList->item(mPageNameIdList.value("data_rt"))->setHidden(false);
@@ -388,6 +391,7 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->pageList->item(mPageNameIdList.value("app_uart"))->setHidden(true);
             ui->pageList->item(mPageNameIdList.value("app_vescremote"))->setHidden(true);
             ui->pageList->item(mPageNameIdList.value("app_nrf"))->setHidden(true);
+            ui->pageList->item(mPageNameIdList.value("app_balance"))->setHidden(true);
             ui->pageList->item(mPageNameIdList.value("app_pas"))->setHidden(true);
             ui->pageList->item(mPageNameIdList.value("app_imu"))->setHidden(true);
             ui->pageList->item(mPageNameIdList.value("data_rt"))->setHidden(true);
@@ -416,6 +420,7 @@ MainWindow::MainWindow(QWidget *parent) :
         mPageAppUart->reloadParams();
         mPageAppNunchuk->reloadParams();
         mPageAppNrf->reloadParams();
+        mPageAppBalance->reloadParams();
         mPageAppPas->reloadParams();
         mPageAppImu->reloadParams();
         mPageFirmware->reloadParams();
@@ -495,6 +500,7 @@ MainWindow::MainWindow(QWidget *parent) :
             mVesc->commands()->getDecodedAdc();
             mVesc->commands()->getDecodedChuk();
             mVesc->commands()->getDecodedPpm();
+            mVesc->commands()->getDecodedBalance();
             mPollAppTimer.setInterval(int(1000.0 / mSettings.value("poll_rate_app_data", 50).toDouble()));
         }
     });
@@ -1518,6 +1524,13 @@ void MainWindow::reloadPages()
                 theme + "icons/appconf.png", false, true);
     mPageNameIdList.insert("app_nrf", ui->pageList->count() - 1);
 
+    mPageAppBalance = new PageAppBalance(this);
+    mPageAppBalance->setVesc(mVesc);
+    ui->pageWidget->addWidget(mPageAppBalance);
+    addPageItem(tr("Balance"),  theme + "icons/EUC-96.png",
+                theme + "icons/appconf.png", false, true);
+    mPageNameIdList.insert("app_balance", ui->pageList->count() - 1);
+
     mPageAppPas = new PageAppPas(this);
     mPageAppPas->setVesc(mVesc);
     ui->pageWidget->addWidget(mPageAppPas);
@@ -1662,6 +1675,7 @@ void MainWindow::reloadPages()
      * app_uart
      * app_vescremote
      * app_nrf
+     * app_balance
      * app_imu
      * app_custom_config_0
      * app_custom_config_1

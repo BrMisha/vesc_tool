@@ -54,6 +54,7 @@
 #include "pages/pageappuart.h"
 #include "pages/pageappnunchuk.h"
 #include "pages/pageappnrf.h"
+#include "pages/pageappbalance.h"
 #include "pages/pageapppas.h"
 #include "pages/pagegpd.h"
 #include "pages/pageexperiments.h"
@@ -211,6 +212,7 @@ private:
     PageAppUart *mPageAppUart;
     PageAppNunchuk *mPageAppNunchuk;
     PageAppNrf *mPageAppNrf;
+    PageAppBalance *mPageAppBalance;
     PageCanAnalyzer *mPageCanAnalyzer;
     PageTerminal *mPageTerminal;
     PageAppPas *mPageAppPas;

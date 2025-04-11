@@ -140,6 +140,7 @@ void BoardSetupWindow::timerSlot()
         mVesc->commands()->getDecodedAdc();
         mVesc->commands()->getDecodedChuk();
         mVesc->commands()->getDecodedPpm();
+        mVesc->commands()->getDecodedBalance();
     }
 
     // IMU Data
